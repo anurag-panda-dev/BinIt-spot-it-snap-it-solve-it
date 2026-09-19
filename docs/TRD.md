@@ -788,14 +788,46 @@ class SeverityService:
 
 ## 14. Geospatial & Map Architecture
 
-### 14.1 MapLibre GL Integration Architecture
+### 14.1 MapLibre GL Integration & Dual-Zone Configuration
 - Frontend loads `@maplibre/maplibre-gl-js`.
 - Basemap styles loaded via vector tile URLs configured in `NEXT_PUBLIC_MAP_STYLE_URL` (pointing to OpenFreeMap `https://tiles.openfreemap.org/styles/liberty`).
 - Reports loaded dynamically via TanStack Query connecting to `/api/v1/map/bounds?min_lat=...&max_lat=...`.
 
+#### Dual-Zone Geographic Presets (Kolkata Urban & Gram Panchayat)
+```typescript
+export interface GeoZonePreset {
+  id: string;
+  name: string;
+  type: "URBAN" | "GRAM_PANCHAYAT";
+  center: [number, number]; // [lon, lat]
+  zoom: number;
+  bounds?: [[number, number], [number, number]]; // [[minLon, minLat], [maxLon, maxLat]]
+}
+
+export const GEO_ZONE_PRESETS: Record<string, GeoZonePreset> = {
+  KOLKATA_URBAN: {
+    id: "KOLKATA_URBAN",
+    name: "Kolkata Urban (KMC)",
+    type: "URBAN",
+    center: [88.3639, 22.5726], // Park Street / Central Kolkata
+    zoom: 12.5,
+    bounds: [[88.2500, 22.4500], [88.4800, 22.6500]],
+  },
+  GRAM_PANCHAYAT: {
+    id: "GRAM_PANCHAYAT",
+    name: "Rajarhat Bishnupur Gram Panchayat",
+    type: "GRAM_PANCHAYAT",
+    center: [88.5122, 22.6105], // Peri-urban / rural village center
+    zoom: 13.5,
+    bounds: [[88.4600, 22.5600], [88.5700, 22.6600]],
+  },
+};
+```
+
 ### 14.2 Marker Clustering & Heatmap Layer
 - GeoJSON feature collection loaded into a MapLibre GeoJSON Source with `cluster: true`, `clusterRadius: 50`, and `clusterMaxZoom: 14`.
 - A dedicated Heatmap layer toggles on/off based on operator UI state, using `heatmap-weight` weighted by `severity_score / 100`.
+- Fast camera flyTo transitions between Kolkata Municipal Wards and Gram Panchayat village points.
 
 ---
 
@@ -1027,6 +1059,14 @@ NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
 CLERK_SECRET_KEY=sk_test_...
 NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
 NEXT_PUBLIC_MAP_STYLE_URL=https://tiles.openfreemap.org/styles/liberty
+# Default Geographic Focus (Kolkata Urban)
+NEXT_PUBLIC_DEFAULT_MAP_LAT=22.5726
+NEXT_PUBLIC_DEFAULT_MAP_LON=88.3639
+NEXT_PUBLIC_DEFAULT_MAP_ZOOM=12.5
+# Rural Focus (Rajarhat Bishnupur Gram Panchayat)
+NEXT_PUBLIC_PANCHAYAT_MAP_LAT=22.6105
+NEXT_PUBLIC_PANCHAYAT_MAP_LON=88.5122
+NEXT_PUBLIC_PANCHAYAT_MAP_ZOOM=13.5
 ```
 
 ### Backend (`apps/api/.env.example`)
@@ -1043,6 +1083,11 @@ AI_CONFIDENCE_THRESHOLD=0.70
 ROUTING_PROVIDER=osrm
 ROUTING_BASE_URL=http://router.project-osrm.org
 BACKEND_CORS_ORIGINS=["http://localhost:3000"]
+# Geospatial Default Anchors
+DEFAULT_ZONE_KOLKATA_LAT=22.5726
+DEFAULT_ZONE_KOLKATA_LON=88.3639
+DEFAULT_ZONE_PANCHAYAT_LAT=22.6105
+DEFAULT_ZONE_PANCHAYAT_LON=88.5122
 ```
 
 ---

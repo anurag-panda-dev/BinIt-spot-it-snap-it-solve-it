@@ -166,32 +166,39 @@ To ensure delivery of a robust, production-grade core architecture during the ha
 └──────────────┴──────────────┴───────────────┴───────────────┘
 ```
 
-### Persona A: The Conscious Citizen (Priya, 28)
+### Persona A: The Urban Citizen (Priya, 28)
 - **Role:** `CITIZEN`
-- **Context:** Urban resident, software professional commuting daily in Bengaluru/Pune.
-- **Goals:** Quickly report garbage dumps along morning walk paths; track resolution progress without calling call centers.
-- **Pain Points:** Lack of feedback after filing complaints; cumbersome government portal forms asking for 20+ fields.
+- **Context:** Urban resident and professional living in Salt Lake / Park Street, Kolkata.
+- **Goals:** Quickly report garbage dumps along daily commute and residential streets; track resolution progress without bureaucratic friction.
+- **Pain Points:** Lack of feedback after filing complaints; cumbersome municipal forms asking for 20+ fields.
 - **Permissions:** Create report, view own reports, view public map (approximate location), cancel own unassigned report.
 
-### Persona B: The Field Waste Collector (Raju, 35)
+### Persona B: The Rural / Gram Panchayat Citizen (Subrata, 34)
+- **Role:** `CITIZEN`
+- **Context:** Village resident and farmer in Rajarhat Bishnupur Gram Panchayat (North 24 Parganas, West Bengal).
+- **Goals:** Report illegal plastic and chemical dumping near village ponds (*pukur*), canals (*khal*), and agricultural roads.
+- **Pain Points:** Remote location without regular municipal garbage trucks; waste dumped into irrigation channels goes unnoticed for months.
+- **Permissions:** Create report, view own reports, view public map, track local panchayat cleanup actions.
+
+### Persona C: The Field Waste Collector (Raju, 35)
 - **Role:** `WORKER`
-- **Context:** Municipal sanitation worker or contracted private waste management fleet crew.
+- **Context:** Sanitation worker or contracted e-rickshaw (*Toto*) / municipal compactor collection crew in Kolkata / Gram Panchayat zones.
 - **Goals:** Know exact locations, waste types, and safety hazards before arriving at a site; easily mark tasks completed.
-- **Pain Points:** Paper manifests, vague verbal instructions, arriving at sites with incorrect protective equipment for hazardous waste.
+- **Pain Points:** Paper manifests, vague verbal instructions, arriving at sites with incorrect equipment for hazardous waste.
 - **Permissions:** View assigned tasks, view route sequence, update task status (`IN_PROGRESS`, `RESOLVED`), upload proof-of-work photos.
 
-### Persona C: The Operations Supervisor (Sunita, 42)
+### Persona D: The Operations Supervisor (Sunita, 42)
 - **Role:** `OPERATOR`
-- **Context:** Ward-level waste management supervisor overseeing collection zones.
+- **Context:** Ward/Panchayat-level waste management supervisor overseeing Kolkata urban wards and Gram Panchayat zones.
 - **Goals:** Monitor live incoming waste reports, verify low-confidence AI predictions, group reports into collection routes, dispatch workers.
 - **Pain Points:** Information overload, inability to identify chronic duplicate complaints, lack of route coordination tools.
 - **Permissions:** View all reports, acknowledge/reject/reclassify reports, assign tasks to workers, generate route plans, mark duplicates.
 
-### Persona D: The Municipal Commissioner / Administrator (Anand, 54)
+### Persona E: The Municipal / Panchayat Administrator (Anand, 54)
 - **Role:** `ADMIN`
-- **Context:** City municipal authority executive responsible for cleanliness ratings, resource allocation, and budget.
-- **Goals:** Identify city hotspots, evaluate ward resolution times, assess recycling and segregation compliance.
-- **Pain Points:** Inconsistent manual Excel reports, lack of real-time auditability, inability to justify equipment budget allocation.
+- **Context:** Municipal Authority (Kolkata Municipal Corporation / KMC) and Panchayat Executive Officer.
+- **Goals:** Identify city and rural hotspots, evaluate ward/panchayat resolution times, assess recycling and segregation compliance.
+- **Pain Points:** Inconsistent manual Excel reports, lack of real-time auditability, inability to justify equipment budget allocation across rural vs. urban sectors.
 - **Permissions:** Full read/write access, system configuration, AI confidence threshold tuning, user role management, system audit logs, full analytics exports.
 
 ---
@@ -562,16 +569,38 @@ Where:
 
 ## 18. Location Intelligence & GIS
 
-### 18.1 Coordinate Precision & Storage
+### 18.1 Target MVP Geographical Coverage (Kolkata Urban & Gram Panchayat)
+The MVP map and spatial intelligence explicitly focus on two complementary administrative environments in West Bengal:
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                        MVP Dual-Zone Spatial Scope                     │
+├────────────────────────────────────┬───────────────────────────────────┤
+│ Zone 1: Kolkata Urban Area (KMC)   │ Zone 2: Gram Panchayat Area       │
+│ • Focus: High-density urban litter │ • Focus: Rural/village dumping    │
+│ • Default Center: 22.5726°N, 88.3639°E│ • Default Center: 22.6105°N, 88.5122°E│
+│ • Areas: Salt Lake, Park Street,   │ • Areas: Rajarhat Bishnupur GP,   │
+│   New Town, Shyambazar, Gariahat   │   Ponds (Pukur), Canals (Khal)    │
+│ • Administration: Municipal Ward   │ • Administration: Gram Sansad/GP  │
+└────────────────────────────────────┴───────────────────────────────────┘
+```
+
+- **Interactive Zone Switcher:** Both citizen and operator map interfaces feature a quick one-click viewport toggle between **"Kolkata Urban (KMC)"** and **"Gram Panchayat Zone"**.
+- **Contextual Waste Patterns:**
+  - *Urban (Kolkata):* High plastic packaging, commercial cardboard, beverage bottles, blocked street drains, overflowing compactor stations.
+  - *Rural (Gram Panchayat):* Plastic and mixed waste dumping along agricultural canals (*khal*), village pond embankments (*pukur*), and unpaved village roads (*kacha rasta*).
+
+### 18.2 Coordinate Precision & Storage
 - Spatial coordinates are captured in standard WGS 84 (`EPSG:4326`).
 - Storage utilizes PostGIS `GEOGRAPHY(Point, 4326)` columns indexed with spatial R-Tree GIST indexes.
 
-### 18.2 Spatial Query Capabilities
+### 18.3 Spatial Query Capabilities
 - **Radius Search:** Retrieve all reports within $R$ meters of a point using `ST_DWithin`.
 - **Bounding Box Search:** Retrieve all reports visible within the current viewport of the MapLibre canvas using `ST_MakeEnvelope`.
+- **Administrative Zone Filter:** Filter by zone tag (`zone='KOLKATA_URBAN'` or `zone='GRAM_PANCHAYAT'`).
 - **Hotspot Aggregation:** Spatial clustering via `ST_ClusterDBSCAN` or grid-based binning (`ST_SnapToGrid`) to compute geographic density heatmaps.
 
-### 18.3 Privacy Layer
+### 18.4 Privacy Layer
 - To protect citizen privacy, public and general citizen map views blur report coordinates by snapping them to a 100-meter centroid or truncating coordinates to 3 decimal places (~110m accuracy).
 - Only authenticated `OPERATOR`, `WORKER`, and `ADMIN` roles receive full 6-decimal precision coordinates for operational dispatch.
 
@@ -743,15 +772,24 @@ The MVP implements a database-backed in-app notification center. Users receive r
 
 ## 30. End-to-End Demo Scenario
 
-### *"The MG Road Cleanup Journey"*
+### *"The Dual-Zone Cleanliness Journey (Kolkata Urban & Rajarhat Gram Panchayat)"*
 
-1. **Step 1 (Citizen Discovery):** Citizen Priya opens Binit on her smartphone at MG Road, Bengaluru. She taps "Report Waste" and snaps a photo of an overflowing plastic and cardboard pile.
-2. **Step 2 (Instant Submission):** The app captures GPS coordinates `(12.9716, 77.5946)`. Priya clicks "Submit Report". The screen immediately renders a confirmation checkmark and report card `#BIN-104`.
-3. **Step 3 (AI Analysis in Real Time):** Behind the scenes, the AI vision worker analyzes the image, returns `category: PLASTIC`, `confidence: 0.91`, and the severity engine flags `severity: HIGH (Score: 75)` due to proximity to a main transit corridor.
-4. **Step 4 (Operator Triage):** Operator Sunita opens the live Operations Center on her laptop. A red marker pops onto the live map. She inspects the AI evidence and clicks **Acknowledge**.
-5. **Step 5 (Route & Dispatch):** Sunita selects Report `#BIN-104` along with two nearby reports and clicks **Generate Route**. The OSRM engine renders an optimized 4.2 km loop. Sunita clicks **Dispatch to Raju**.
-6. **Step 6 (Worker Resolution):** Collector Raju opens his mobile task view, follows the route, arrives at MG Road, cleans the site, snaps a resolution photo, and taps **Mark Collected**.
-7. **Step 7 (Closed Loop):** Priya receives an in-app notification: *"Report #BIN-104 has been cleaned up!"* The operator dashboard updates its real-time analytics chart to reflect +1 resolved task.
+#### Scene A: Urban Kolkata (Park Street / Salt Lake)
+1. **Step 1 (Citizen Discovery):** Urban citizen Priya opens Binit on her smartphone near Park Street, Kolkata. She taps "Report Waste" and photographs a large commercial accumulation of plastic packaging and beverage cups blocking a sidewalk drain.
+2. **Step 2 (Instant Submission):** GPS captures `(22.5512° N, 88.3524° E)`. Priya taps "Submit Report". System responds in $<2$ seconds with confirmation `#KMC-101` and status `SUBMITTED`.
+3. **Step 3 (AI & Severity Evaluation):** AI vision model classifies `PLASTIC` (Confidence: `0.93`). Severity engine detects proximity to a primary roadway and blocked drainage, assigning `severity: HIGH (Score: 78)`.
+
+#### Scene B: Rural Gram Panchayat (Rajarhat Bishnupur GP)
+4. **Step 4 (Panchayat Citizen Discovery):** Village resident Subrata spots an illegal hazardous chemical/mixed dumping site along a canal (*khal*) embankment in Rajarhat Bishnupur Gram Panchayat `(22.6105° N, 88.5122° E)`.
+5. **Step 5 (Submission & Urgent Severity):** Subrata submits photo `#GP-204`. AI identifies `HAZARDOUS / MIXED` (Confidence: `0.86`). Severity engine applies the mandatory environmental sensitivity rule for water body proximity ($+15$ pts), triggering `severity: CRITICAL (Score: 88)`.
+
+#### Scene C: Operator Triage & Dynamic Dispatch
+6. **Step 6 (Multi-Zone Dashboard):** Operator Sunita opens the Operations Center. Using the **Zone Switcher**, she inspects the live map:
+   - Switches to **Kolkata Urban Zone**: Reviews `#KMC-101`, confirms AI classification, and queues it for compactor truck dispatch.
+   - Switches to **Gram Panchayat Zone**: A red pulsating marker highlights `#GP-204`. Sunita immediately acknowledges the critical water hazard.
+7. **Step 7 (OSRM Route Generation):** Sunita selects `#GP-204` along with 3 rural dump points. OSRM computes an optimized 6.8 km collection loop for the Panchayat's e-rickshaw (*Toto*) collection team. She dispatches to worker Raju.
+8. **Step 8 (Worker Action & Resolution):** Raju follows the route on his mobile task screen, arrives at the canal site, cleans the dumping area, attaches a completion photo, and taps **Mark Collected**.
+9. **Step 9 (Closed Loop & Analytics):** Subrata and Priya receive notifications: *"Your waste report has been resolved!"* The municipal analytics dashboard updates real-time KPIs across both KMC and Gram Panchayat sectors.
 
 ---
 *End of Product Requirements Document (PRD)*
