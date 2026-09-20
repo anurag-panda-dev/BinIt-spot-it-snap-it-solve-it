@@ -22,11 +22,36 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://binit-sigma.vercel.app"),
   title: { default: "Binit — Spot It. Snap It. Solve It.", template: "%s · Binit" },
   description:
-    "AI-powered civic waste intelligence for Kolkata Urban and Gram Panchayat zones. Report waste, classify severity, dispatch collection crews, and track resolution.",
+    "AI-powered civic waste intelligence for Kolkata Urban and Gram Panchayat zones. Spot waste, snap a photo, classify severity with AI, dispatch collection crews, and verify cleanups.",
   applicationName: "Binit",
-  keywords: ["waste", "civic tech", "AI", "Kolkata", "recycling", "smart city"],
+  keywords: ["waste", "civic tech", "AI", "Kolkata", "recycling", "smart city", "waste management", "geospatial routing"],
+  openGraph: {
+    title: "Binit — Spot It. Snap It. Solve It.",
+    description:
+      "AI-powered civic waste intelligence for Kolkata Urban and Gram Panchayat zones. Spot waste, snap a photo, classify severity with AI, dispatch collection crews, and verify cleanups.",
+    url: "https://binit-sigma.vercel.app",
+    siteName: "Binit Civic Intelligence",
+    images: [
+      {
+        url: "/social.jpg",
+        width: 1280,
+        height: 640,
+        alt: "Binit — Spot It. Snap It. Solve It. AI-Powered Civic Waste Intelligence",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Binit — Spot It. Snap It. Solve It.",
+    description:
+      "AI-powered civic waste intelligence platform for automated municipal dispatch and verified clean-up loops.",
+    images: ["/social.jpg"],
+  },
   icons: {
     icon: [{ url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }],
     apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],

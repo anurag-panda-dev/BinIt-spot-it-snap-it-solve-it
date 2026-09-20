@@ -1,13 +1,19 @@
-# 🌿 Binit (`binit.civic`)
+<p align="center">
+  <img src="./apps/web/public/social.jpg" alt="BinIt — Spot It. Snap It. Solve It." width="100%" />
+</p>
+
+# 🌿 BinIt (`binit.civic`)
 > **AI-Powered Geospatial Civic Waste Management Platform**  
 > *Transforming citizen photo reports into automated municipal dispatch & verified clean-up loops.*
 
-[![Next.js](https://img.shields.io/badge/Next.js-14.2-black?style=flat&logo=next.js)](https://nextjs.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688?style=flat&logo=fastapi)](https://fastapi.tiangolo.com/)
-[![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat&logo=python)](https://python.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.6-3178C6?style=flat&logo=typescript)](https://www.typescriptlang.org/)
-[![MapLibre](https://img.shields.io/badge/MapLibre_GL-4.7-3969EC?style=flat&logo=maplibre)](https://maplibre.org/)
-[![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
+<p align="center">
+  <a href="https://nextjs.org/"><img src="https://img.shields.io/badge/Next.js-14.2-black?style=for-the-badge&logo=next.js" alt="Next.js" /></a>
+  <a href="https://fastapi.tiangolo.com/"><img src="https://img.shields.io/badge/FastAPI-0.115+-009688?style=for-the-badge&logo=fastapi" alt="FastAPI" /></a>
+  <a href="https://python.org/"><img src="https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python" alt="Python" /></a>
+  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.6-3178C6?style=for-the-badge&logo=typescript" alt="TypeScript" /></a>
+  <a href="https://maplibre.org/"><img src="https://img.shields.io/badge/MapLibre_GL-4.7-3969EC?style=for-the-badge&logo=maplibre" alt="MapLibre" /></a>
+  <a href="https://tailwindcss.com/"><img src="https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css" alt="Tailwind CSS" /></a>
+</p>
 
 ---
 
@@ -153,8 +159,9 @@ pytest
 │       ├── app/                 # App Router pages (landing, citizen, operator, worker, admin)
 │       ├── components/          # Reusable UI & MapLibre components
 │       └── lib/                 # API client, auth state, and map helpers
-├── docs/                        # Architecture, PRD, TRD, AI, and Database Specs
-├── DEPLOY.md                    # Step-by-step production deployment guide
+├── docs/                        # Architecture, PRD, TRD, AI, Database & Deployment Specs
+│   ├── DEPLOY.md                # FastAPI Cloud & Vercel deployment guide
+│   └── ...
 └── README.md
 ```
 
@@ -162,7 +169,7 @@ pytest
 
 ## 🚢 Deployment
 
-For complete free-tier deployment instructions on **Vercel (Frontend)** and **Render / Railway / Cloud (Backend)**, please see [DEPLOY.md](./DEPLOY.md).
+For complete deployment instructions on **FastAPI Cloud (Backend)** and **Vercel (Frontend)**, please see [docs/DEPLOY.md](./docs/DEPLOY.md).
 
 ---
 
