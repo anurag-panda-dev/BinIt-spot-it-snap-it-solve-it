@@ -158,21 +158,21 @@ export default function ReportPage() {
         </div>
 
         <div className="lg:col-span-3">
-          <Card className="p-3">
+          <Card className="p-2.5 sm:p-3">
             <div className="mb-3 flex flex-wrap items-center justify-between gap-2 px-1">
               <div className="flex items-center gap-2">
                 <MapPin className={cx("size-4", pin ? "text-forest-400" : "text-forest-100/40")} />
-                <span className="text-sm font-medium text-forest-100/70">
+                <span className="text-xs sm:text-sm font-medium text-forest-100/70">
                   {pin ? (
-                    <>Pin: {pin.lat.toFixed(5)}, {pin.lon.toFixed(5)}</>
+                    <>Pin: {pin.lat.toFixed(4)}, {pin.lon.toFixed(4)}</>
                   ) : (
-                    "Drag the green pin to the exact spot"
+                    "Drag the pin to the exact spot"
                   )}
                 </span>
               </div>
               <span
                 className={cx(
-                  "rounded-full px-3 py-1 text-[11px] font-semibold",
+                  "rounded-full px-2.5 py-0.5 text-[10px] sm:px-3 sm:py-1 sm:text-[11px] font-semibold",
                   zone === "GRAM_PANCHAYAT"
                     ? "bg-amber-500/15 text-amber-300 ring-1 ring-amber-500/40"
                     : "bg-forest-500/15 text-forest-300 ring-1 ring-forest-500/40",
@@ -184,7 +184,7 @@ export default function ReportPage() {
             <BinitMap
               center={mapCenter}
               zoom={12}
-              heightClass="h-[420px]"
+              heightClass="h-[280px] sm:h-[420px]"
               draggablePin={
                 pin
                   ? { lat: pin.lat, lon: pin.lon, onChange: (lat, lon) => setPin({ lat, lon }) }
@@ -194,7 +194,7 @@ export default function ReportPage() {
           </Card>
 
           <div className="mt-4 flex justify-end">
-            <Button size="lg" onClick={submit} loading={submitting}>
+            <Button size="lg" className="w-full sm:w-auto" onClick={submit} loading={submitting}>
               {submitting ? <Loader2 className="size-4 animate-spin" /> : <Send className="size-4" />}
               Submit report
             </Button>

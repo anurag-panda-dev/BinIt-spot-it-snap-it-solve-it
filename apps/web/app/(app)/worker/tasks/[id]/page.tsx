@@ -85,8 +85,8 @@ export default function WorkerTaskDetail() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <Card>
-          <BinitMap markers={markers} center={[report.longitude, report.latitude]} zoom={14} heightClass="h-[380px]" />
+        <Card className="p-2.5 sm:p-5">
+          <BinitMap markers={markers} center={[report.longitude, report.latitude]} zoom={14} heightClass="h-[280px] sm:h-[380px]" />
           <div className="mt-3 flex items-center justify-between rounded-xl bg-white/[0.03] px-3 py-2 text-xs ring-1 ring-white/8">
             <span className="text-forest-100/60">Exact coordinates</span>
             <span className="font-mono text-forest-100">{report.latitude.toFixed(6)}, {report.longitude.toFixed(6)}</span>

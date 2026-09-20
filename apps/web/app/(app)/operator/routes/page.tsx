@@ -120,7 +120,7 @@ export default function RoutePlannerPage() {
             ) : pool.length === 0 ? (
               <EmptyState title="Nothing to dispatch" hint="Acknowledge reports first so they enter the dispatch queue." />
             ) : (
-              <div className="max-h-[560px] space-y-2 overflow-y-auto pr-1">
+              <div className="max-h-[320px] sm:max-h-[560px] space-y-2 overflow-y-auto pr-1">
                 {pool.map((r) => (
                   <button
                     key={r.id}
@@ -158,27 +158,27 @@ export default function RoutePlannerPage() {
           </Card>
 
           <Card className="mt-4">
-            <div className="flex items-center justify-between gap-3">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div>
                 <p className="text-xs font-semibold text-white">{selectedIds.length} waypoints selected</p>
                 <p className="mt-0.5 text-[11px] text-forest-100/45">Up to 15 recommended for demo routing.</p>
               </div>
-              <Button onClick={optimize} loading={optimizing} disabled={selectedIds.length < 1}>
+              <Button onClick={optimize} loading={optimizing} disabled={selectedIds.length < 1} className="w-full sm:w-auto">
                 <RouteIcon className="size-4" /> Optimize route
               </Button>
             </div>
             {route && (
               <div className="mt-4 grid grid-cols-3 gap-2">
                 <div className="rounded-xl bg-white/5 px-3 py-2 text-center">
-                  <p className="text-lg font-bold text-white">{route.total_distance_km} km</p>
+                  <p className="text-base sm:text-lg font-bold text-white">{route.total_distance_km} km</p>
                   <p className="text-[10px] text-forest-100/45">distance</p>
                 </div>
                 <div className="rounded-xl bg-white/5 px-3 py-2 text-center">
-                  <p className="text-lg font-bold text-white">{route.estimated_duration_min} min</p>
+                  <p className="text-base sm:text-lg font-bold text-white">{route.estimated_duration_min} min</p>
                   <p className="text-[10px] text-forest-100/45">est. duration</p>
                 </div>
                 <div className="rounded-xl bg-white/5 px-3 py-2 text-center">
-                  <p className="text-lg font-bold text-white">{selectedIds.length}</p>
+                  <p className="text-base sm:text-lg font-bold text-white">{selectedIds.length}</p>
                   <p className="text-[10px] text-forest-100/45">stops</p>
                 </div>
               </div>
@@ -187,7 +187,7 @@ export default function RoutePlannerPage() {
         </div>
 
         <div className="lg:col-span-3">
-          <Card className="p-3">
+          <Card className="p-2.5 sm:p-3">
             <div className="mb-3 flex flex-wrap items-center justify-between gap-2 px-1">
               <h3 className="flex items-center gap-2 text-sm font-semibold text-white">
                 <RouteIcon className="size-4 text-sky-400" />
@@ -203,7 +203,7 @@ export default function RoutePlannerPage() {
               markers={toMarkers(selectedReports)}
               center={[88.44, 22.58]}
               zoom={11}
-              heightClass="h-[440px]"
+              heightClass="h-[300px] sm:h-[440px]"
               route={route?.route_geojson || null}
             />
           </Card>

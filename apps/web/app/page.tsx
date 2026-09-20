@@ -133,14 +133,14 @@ export default function LandingPage() {
       <AmbientEcoBackground />
 
       {/* Navigation */}
-      <header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-5 py-5 sm:px-6">
-        <Link href="/" className="flex items-center gap-2.5">
+      <header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 sm:py-5">
+        <Link href="/" className="flex items-center gap-2">
           <img
             src="/icons/icon-512.png"
             alt="Binit Logo"
-            className="size-9 rounded-xl object-contain shadow-glow-forest"
+            className="size-8 sm:size-9 rounded-xl object-contain shadow-glow-forest"
           />
-          <span className="font-display text-lg font-bold tracking-tight text-white">
+          <span className="font-display text-base sm:text-lg font-bold tracking-tight text-white">
             binit<span className="text-forest-400">.civic</span>
           </span>
         </Link>
@@ -160,52 +160,52 @@ export default function LandingPage() {
           </a>
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <Link
             href="/signin"
-            className="rounded-xl glass px-4 py-2 text-sm font-semibold text-forest-100 hover:bg-white/10 transition"
+            className="rounded-xl glass px-3 py-1.5 text-xs font-semibold text-forest-100 hover:bg-white/10 transition sm:px-4 sm:py-2 sm:text-sm"
           >
             Sign In
           </Link>
           <Link
             href="/signin"
-            className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-primary px-4 py-2 text-sm font-semibold text-white shadow-glow-forest hover:brightness-110 active:translate-y-px transition"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-primary px-3 py-1.5 text-xs font-semibold text-white shadow-glow-forest hover:brightness-110 active:translate-y-px transition sm:px-4 sm:py-2 sm:text-sm"
           >
-            Report Waste <ArrowRight className="size-3.5" />
+            Report <span className="hidden sm:inline">Waste</span> <ArrowRight className="size-3.5" />
           </Link>
         </div>
       </header>
 
-      <main className="relative z-10 mx-auto max-w-6xl px-5 sm:px-6">
+      <main className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
         {/* Hero Section */}
-        <section className="flex flex-col items-center pb-8 pt-10 text-center sm:pt-16">
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs font-semibold text-forest-300">
-            <Sparkles className="size-3.5 text-amber-400" />
-            <span>AI-Powered Civic Waste Platform · Kolkata & Rajarhat</span>
+        <section className="flex flex-col items-center pb-8 pt-6 text-center sm:pt-16">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full glass px-3.5 py-1.5 text-[11px] font-semibold text-forest-300 sm:mb-5 sm:px-4 sm:text-xs">
+            <Sparkles className="size-3.5 text-amber-400 shrink-0" />
+            <span className="truncate">AI-Powered Civic Waste Platform · Kolkata & Rajarhat</span>
           </div>
 
-          <h1 className="max-w-4xl font-display text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-6xl md:text-7xl">
+          <h1 className="max-w-4xl font-display text-3xl font-bold leading-[1.12] tracking-tight text-white sm:text-6xl md:text-7xl">
             Spot it. Snap it.
             <br />
             <span className="gradient-text text-glow">Solve it.</span>
           </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-forest-100/70 sm:text-lg">
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-forest-100/70 sm:mt-6 sm:text-lg">
             Binit transforms everyday citizen photos into instant municipal action — classifying waste
             types, assessing severity, and dispatching collection crews from Kolkata&apos;s busy streets to
             Rajarhat&apos;s village canal banks.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <div className="mt-6 flex w-full max-w-md flex-col items-stretch justify-center gap-2.5 sm:mt-8 sm:w-auto sm:max-w-none sm:flex-row sm:items-center sm:gap-3">
             <Link
               href="/signin"
-              className="inline-flex items-center gap-2 rounded-xl bg-gradient-primary px-7 py-3.5 font-bold text-white shadow-glow-forest hover:brightness-110 active:translate-y-px transition"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-primary px-6 py-3 text-sm font-bold text-white shadow-glow-forest hover:brightness-110 active:translate-y-px transition sm:px-7 sm:py-3.5 sm:text-base"
             >
               Report Waste Now <ArrowRight className="size-4" />
             </Link>
             <Link
               href="/signin"
-              className="inline-flex items-center gap-2 rounded-xl glass px-7 py-3.5 font-semibold text-forest-100 hover:bg-white/10 transition"
+              className="inline-flex items-center justify-center gap-2 rounded-xl glass px-6 py-3 text-sm font-semibold text-forest-100 hover:bg-white/10 transition sm:px-7 sm:py-3.5 sm:text-base"
             >
               Explore Live Demo
             </Link>

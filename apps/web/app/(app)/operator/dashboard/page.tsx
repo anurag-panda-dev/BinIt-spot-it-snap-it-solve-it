@@ -27,20 +27,22 @@ export default function OperatorDashboard() {
         sub="Live intelligence across Kolkata Urban and Rajarhat Gram Panchayat."
       />
 
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-2.5 sm:gap-4 lg:grid-cols-5">
         <StatCard label="Total reports" value={summary?.total_reports ?? "—"} icon={<Recycle className="size-4" />} />
         <StatCard label="Pending triage" value={summary?.pending_triage ?? "—"} sub="awaiting operator" icon={<Inbox className="size-4" />} accent="amber" />
         <StatCard label="High / Critical" value={summary?.high_critical ?? "—"} sub="needs priority" icon={<AlertTriangle className="size-4" />} accent="red" />
         <StatCard label="Resolved today" value={summary?.resolved_today ?? "—"} icon={<ClipboardList className="size-4" />} accent="emerald" />
-        <StatCard label="Active backlog" value={summary?.backlog ?? "—"} sub="not yet closed" icon={<Clock className="size-4" />} />
+        <div className="col-span-2 sm:col-span-1">
+          <StatCard label="Active backlog" value={summary?.backlog ?? "—"} sub="not yet closed" icon={<Clock className="size-4" />} />
+        </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-4">
         <StatCard
           label="Zone split"
           value={
             summary ? (
-              <span className="text-lg">
+              <span className="text-base sm:text-lg">
                 {summary.by_zone.KOLKATA_URBAN} <span className="text-xs text-forest-100/50">urban</span> ·{" "}
                 {summary.by_zone.GRAM_PANCHAYAT} <span className="text-xs text-forest-100/50">panchayat</span>
               </span>
@@ -55,7 +57,7 @@ export default function OperatorDashboard() {
           label="SLA"
           value={
             analytics ? (
-              <span className="text-lg">
+              <span className="text-base sm:text-lg">
                 {analytics.mttr_hours ? `${analytics.mttr_hours}h` : "—"}{" "}
                 <span className="text-xs text-forest-100/50">MTTR</span> ·{" "}
                 {analytics.mttt_hours ? `${analytics.mttt_hours}h` : "—"}{" "}

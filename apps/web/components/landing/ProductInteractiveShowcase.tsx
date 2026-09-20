@@ -32,21 +32,21 @@ export function ProductInteractiveShowcase() {
   const [taskResolved, setTaskResolved] = useState(false);
 
   return (
-    <div className="mx-auto my-12 w-full max-w-5xl">
-      {/* Interactive Tabs Bar */}
-      <div className="flex flex-wrap items-center justify-center gap-2 pb-6">
+    <div className="mx-auto my-8 w-full max-w-5xl sm:my-12">
+      {/* Interactive Tabs Bar with horizontal scroll on mobile */}
+      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar px-1 pb-4 sm:flex-wrap sm:justify-center">
         {[
-          { id: "citizen", label: "1. Citizen Report", icon: <Camera className="size-4" /> },
-          { id: "operator", label: "2. Operator Triage", icon: <Layers className="size-4" /> },
-          { id: "worker", label: "3. Fleet Collection", icon: <Truck className="size-4" /> },
-          { id: "analytics", label: "4. City Analytics", icon: <BarChart3 className="size-4" /> },
+          { id: "citizen", label: "1. Citizen Report", icon: <Camera className="size-4 shrink-0" /> },
+          { id: "operator", label: "2. Operator Triage", icon: <Layers className="size-4 shrink-0" /> },
+          { id: "worker", label: "3. Fleet Collection", icon: <Truck className="size-4 shrink-0" /> },
+          { id: "analytics", label: "4. City Analytics", icon: <BarChart3 className="size-4 shrink-0" /> },
         ].map((tab) => {
           const isActive = activeTab === tab.id;
           return (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as typeof activeTab)}
-              className={`flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 ${
+              className={`flex shrink-0 items-center gap-2 whitespace-nowrap rounded-xl px-3.5 py-2 text-xs font-semibold sm:px-4 sm:py-2.5 sm:text-sm transition-all duration-200 active:scale-95 ${
                 isActive
                   ? "bg-forest-500 text-white shadow-glow-forest"
                   : "glass text-forest-100/70 hover:bg-white/10 hover:text-white"
@@ -60,7 +60,7 @@ export function ProductInteractiveShowcase() {
       </div>
 
       {/* Main Interactive Showcase Window */}
-      <div className="overflow-hidden rounded-3xl border border-white/10 bg-[#081811]/90 p-6 shadow-2xl backdrop-blur-xl sm:p-8">
+      <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#081811]/90 p-4 shadow-2xl backdrop-blur-xl sm:rounded-3xl sm:p-8">
         {/* ===================== TAB 1: CITIZEN REPORT FLOW ===================== */}
         {activeTab === "citizen" && (
           <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12">

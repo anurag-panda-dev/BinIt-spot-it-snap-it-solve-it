@@ -72,7 +72,7 @@ export default function CitizenMapPage() {
         sub="Location precision is blurred to ~100 m on this public view to protect reporters."
       />
 
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2 sm:flex-wrap sm:pb-0">
         <button
           onClick={() => {
             const next = !liveEnabled;
@@ -81,7 +81,7 @@ export default function CitizenMapPage() {
             else liveGeo.stop();
           }}
           className={cx(
-            "flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold ring-1 transition",
+            "flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-3.5 py-1.5 text-xs font-semibold ring-1 transition active:scale-95",
             liveEnabled ? "bg-sky-500 text-white ring-sky-500" : "bg-white/5 text-forest-100/70 ring-white/10 hover:bg-white/10",
           )}
         >
@@ -90,7 +90,7 @@ export default function CitizenMapPage() {
         <button
           onClick={() => setZone(null)}
           className={cx(
-            "flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold ring-1 transition",
+            "flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-3.5 py-1.5 text-xs font-semibold ring-1 transition active:scale-95",
             !zone ? "bg-forest-500 text-white ring-forest-500" : "bg-white/5 text-forest-100/70 ring-white/10 hover:bg-white/10",
           )}
         >
@@ -101,18 +101,18 @@ export default function CitizenMapPage() {
             key={key}
             onClick={() => setZone(zone === key ? null : (key as Zone))}
             className={cx(
-              "flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold ring-1 transition",
+              "flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-3.5 py-1.5 text-xs font-semibold ring-1 transition active:scale-95",
               zone === key ? "bg-forest-500 text-white ring-forest-500" : "bg-white/5 text-forest-100/70 ring-white/10 hover:bg-white/10",
             )}
           >
             <Building2 className="size-3.5" /> {z.name}
           </button>
         ))}
-        <span className="mx-1 h-4 w-px bg-white/10" />
+        <span className="hidden sm:inline mx-1 h-4 w-px bg-white/10 shrink-0" />
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="rounded-full border-0 bg-white/5 px-3 py-1.5 text-xs font-medium text-forest-100 ring-1 ring-white/10 focus:outline-none"
+          className="shrink-0 rounded-full border-0 bg-white/5 px-3 py-1.5 text-xs font-medium text-forest-100 ring-1 ring-white/10 focus:outline-none"
         >
           <option value="ALL">All categories</option>
           {CATEGORIES.map((c) => (
@@ -124,13 +124,13 @@ export default function CitizenMapPage() {
       <div className="grid gap-4 lg:grid-cols-3">
         <div className={cx("lg:col-span-2", selectedReport && "lg:col-span-2")}>
           {loading ? (
-            <div className="flex h-[540px] items-center justify-center rounded-2xl border border-white/8 bg-[#0d2119]">
+            <div className="flex h-[340px] sm:h-[540px] items-center justify-center rounded-2xl border border-white/8 bg-[#0d2119]">
               <Loader2 className="size-5 animate-spin text-forest-400" />
             </div>
           ) : error ? (
             <ErrorBlock message={error} onRetry={() => window.location.reload()} />
           ) : (
-            <BinitMap markers={markers} center={baseCenter} zoom={baseZoom} selectedId={selected} onSelect={setSelected} heightClass="h-[540px]" live={live} riskZones={riskZones} />
+            <BinitMap markers={markers} center={baseCenter} zoom={baseZoom} selectedId={selected} onSelect={setSelected} heightClass="h-[340px] sm:h-[540px]" live={live} riskZones={riskZones} />
           )}
         </div>
 

@@ -45,7 +45,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       logout: () => {
         clearToken();
         setUser(null);
-        if (typeof window !== "undefined") window.location.assign("/");
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("binit_token");
+          sessionStorage.clear();
+          window.location.href = "/signin";
+        }
       },
     }),
     [user, loading],
